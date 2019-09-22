@@ -19,15 +19,12 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
+//            CollectionView(imageListService.images) { imageDTO in
             List(imageListService.images) { imageDTO in
 //                NavigationButton(destination: ImageDetailView(url: url)) {
-                    HStack {
-                        ForEach(0..<5) { _ in
-                            URLImage(imageName: imageDTO.image)
-                                .frame(minWidth: 100.0, maxWidth: 100.0, minHeight: 100.0, maxHeight: 100.0)
-                                .clipped()
-                        }
-                    }
+                        URLImage(imageName: imageDTO.image)
+                            .frame(minWidth: 100.0, maxWidth: 100.0, minHeight: 100.0, maxHeight: 100.0)
+                            .clipped()
 //                }
             }
             .navigationBarTitle(Text("Images"))

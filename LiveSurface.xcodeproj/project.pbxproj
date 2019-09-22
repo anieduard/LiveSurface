@@ -18,6 +18,7 @@
 		10287DCC2337A14200AB1B48 /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10287DC92337A14100AB1B48 /* ImageListService.swift */; };
 		10287DCE2337A17700AB1B48 /* ImageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10287DCD2337A17700AB1B48 /* ImageDTO.swift */; };
 		10287DD02337A6C600AB1B48 /* ImagesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10287DCF2337A6C600AB1B48 /* ImagesDTO.swift */; };
+		10287DD42337D59100AB1B48 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10287DD32337D59100AB1B48 /* CollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		10287DC92337A14100AB1B48 /* ImageListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
 		10287DCD2337A17700AB1B48 /* ImageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDTO.swift; sourceTree = "<group>"; };
 		10287DCF2337A6C600AB1B48 /* ImagesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesDTO.swift; sourceTree = "<group>"; };
+		10287DD32337D59100AB1B48 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				1016584323377B7A003A3184 /* ContentView.swift */,
+				10287DD32337D59100AB1B48 /* CollectionView.swift */,
 				10287DC0233781A800AB1B48 /* URLImage.swift */,
 			);
 			path = "User Interface";
@@ -217,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10287DD42337D59100AB1B48 /* CollectionView.swift in Sources */,
 				1016584523377B7A003A3184 /* AppDelegate.swift in Sources */,
 				1016584623377B7A003A3184 /* SceneDelegate.swift in Sources */,
 				10287DCE2337A17700AB1B48 /* ImageDTO.swift in Sources */,
