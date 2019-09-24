@@ -19,51 +19,58 @@ struct CollectionView<Data: RandomAccessCollection, RowContent: View>: UIViewRep
     }
     
     func makeUIView(context: Context) -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "myCell")
-        let dataSource = UICollectionViewDiffableDataSource<Section, SectionModel>(collectionView: collectionView) { collectionView, indexPath, sectionModel in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "myCell", for: indexPath)
-            let swiftUIView = UIHostingController(rootView: self.rowContent(self.data.first!))
-            cell.addSubview(swiftUIView.view)
-            return cell
-        }
-        populate(dataSource: dataSource)
-        context.coordinator.dataSource = dataSource
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = context.coordinator
+        collectionView.dataSource = context.coordinator
+        collectionView.backgroundColor = .clear
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: String(describing: UICollectionViewCell.self))
+        
         return collectionView
     }
 
     func updateUIView(_ uiView: UICollectionView, context: Context) {
-        let dataSource = context.coordinator.dataSource
+//        let dataSource = context.coordinator.dataSource
+        uiView.reloadData()
+        print(context.coordinator.data.count)
     }
     
-    func makeCoordinator() -> Coordinator {
-        return Coordinator()
-    }
-
-    func populate(dataSource: UICollectionViewDiffableDataSource<Section, SectionModel>) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, SectionModel>()
-        snapshot.appendSections([.image])
-        snapshot.appendItems([SectionModel(), SectionModel(), SectionModel()])
-        dataSource.apply(snapshot)
+    func makeCoordinator() -> Coordinator<Data, RowContent> {
+        return Coordinator(data: data)
     }
 }
 
-enum Section {
-    case image
-}
-
-class SectionModel: Hashable {
-    private let id = UUID()
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+class Coordinator<Data: RandomAccessCollection, RowContent: View>: NSObject, UICollectionViewDelegate, UICollectionViewDataSource where Data.Element: Identifiable {
+    
+//    private let data: Data
+    let data: Data
+    
+    init(data: Data) {
+        self.data = data
     }
-
-    static func == (lhs: SectionModel, rhs: SectionModel) -> Bool {
-        return lhs.id == rhs.id
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data.count
     }
-}
-
-class Coordinator {
-    var dataSource: UICollectionViewDiffableDataSource<Section, SectionModel>?
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UICollectionViewCell.self), for: indexPath)
+        let swiftUIView: UIView = UIHostingController(rootView: Text("MUIE")).view
+//        swiftUIView.preservesSuperviewLayoutMargins = false
+        swiftUIView.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(swiftUIView)
+        
+        NSLayoutConstraint.activate([
+            swiftUIView.leftAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.leftAnchor),
+            swiftUIView.rightAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.rightAnchor),
+            swiftUIView.topAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.topAnchor),
+            swiftUIView.bottomAnchor.constraint(equalTo: cell.contentView.layoutMarginsGuide.bottomAnchor),
+        ])
+        
+        return cell
+    }
 }
